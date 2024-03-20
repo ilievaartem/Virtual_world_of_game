@@ -12,9 +12,10 @@ import creational.prototype.CharacterCache;
 import creational.singleton.GameManager;
 import creational.abstractFactory.AbstractFactory;
 import creational.abstractFactory.CharacterNature;
+import structural_design.bridge.*;
 
 public class Main {
-    public static void main(String[] args) throws IllegalAccessException {
+    public static <Player, Flyweight, Game> void main(String[] args) throws IllegalAccessException {
         // Singleton Pattern
         GameManager gameManager = GameManager.getInstance();
         gameManager.startGame();
@@ -31,7 +32,6 @@ public class Main {
 
         // Abstract Factory Pattern
         AbstractFactory goodFactory = new GoodFactory();
-        AbstractFactory badFactory = new BadFactory();
 
         Good personGood = goodFactory.createGoodCharacter(CharacterNature.HUMANIST);
 
@@ -61,5 +61,14 @@ public class Main {
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
+
+        //Bridge
+        Player consolePlayer = (Player) new ConsolePlayer();
+        Platform consolePlatform = new ConsolePlatform((structural_design.bridge.Player) consolePlayer);
+        consolePlatform.play();
+
+        Player pcPlayer = (Player) new PCPlayer();
+        Platform pcPlatform = new PCPlatform((structural_design.bridge.Player) pcPlayer);
+        pcPlatform.play();
     }
 }

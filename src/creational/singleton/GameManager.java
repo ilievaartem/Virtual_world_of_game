@@ -18,3 +18,22 @@ public class GameManager {
         System.out.println("Гра почалася!");
     }
 }
+
+/*public class GameManager
+    private GameManager() {
+        // Ініціалізація гри
+    }
+
+    private static class SingletonHelper {
+        private static final GameManager INSTANCE = new GameManager();
+    }
+
+    public static GameManager getInstance() {
+        return SingletonHelper.INSTANCE ;
+    }
+
+    public void startGame() {
+        sout("Гра почалася!");
+    }
+}
+ */
