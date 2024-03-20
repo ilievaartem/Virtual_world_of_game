@@ -1,6 +1,7 @@
 package creational.prototype;
 
 import creational.abstractFactory.CharacterNature;
+import creational.builder.CharacterBuilder;
 import creational.factory.player.CharacterType;
 
 public class GameCharacter implements Cloneable {
@@ -15,6 +16,17 @@ public class GameCharacter implements Cloneable {
 
     public GameCharacter(String name) {
         this.name = name;
+    }
+
+    public GameCharacter(CharacterBuilder builder) {
+        this.name = builder.name;
+        this.canSteal = builder.canSteal;
+        this.canGoodFightAtTheStart = builder.canGoodFightAtTheStart;
+        this.canSpeakSupportWords = builder.canSpeakSupportWords;
+        this.canHelp = builder.canHelp;
+        this.canGiveMission = builder.canGiveMission;
+        this.characterType = builder.characterType;
+        this.characterNature = builder.characterNature;
     }
 
     public String getGameCharacterName() {

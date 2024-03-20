@@ -33,7 +33,7 @@ public class Main {
         // Abstract Factory Pattern
         AbstractFactory goodFactory = new GoodFactory();
 
-        Good personGood = goodFactory.createGoodCharacter(CharacterNature.HUMANIST);
+        Good personGood = goodFactory.createGoodCharacterc(CharacterNature.HUMANIST);
 
         System.out.println("Створено: " + personGood.getGoodNature());
 

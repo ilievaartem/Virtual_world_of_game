@@ -7,8 +7,9 @@ import creational.abstractFactory.nature.Militant;
 
 public class BadFactory extends AbstractFactory {
     @Override
-    public Bad createBadCharacter(CharacterNature nature){
-        switch (nature){
+    public Bad createBadCharacter(Nature nature){
+        CharacterNature characterNature = mapNature(nature);
+        switch (characterNature){
             case MILITANT:
                 return new Militant();
             case BILIGARH:
@@ -18,7 +19,16 @@ public class BadFactory extends AbstractFactory {
         }
     }
     @Override
-    public Good createGoodCharacter(CharacterNature nature) {
+    public Good createGoodCharacter(Nature nature) {
         throw new UnsupportedOperationException("BadFactory не має реалізації для створення добрих персонажів");
+    }
+
+    private CharacterNature mapNature(Nature nature){
+        switch (nature) {
+            case BAD:
+                return CharacterNature.MILITANT;
+            default:
+                throw new IllegalArgumentException("Невідомий тип характера: " + nature);
+        }
     }
 }
