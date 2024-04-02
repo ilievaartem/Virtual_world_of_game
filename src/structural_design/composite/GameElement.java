@@ -1,5 +1,5 @@
 package structural_design.composite;
 
-public interface GameComponent {
+public interface GameElement {
     void play();
 }
