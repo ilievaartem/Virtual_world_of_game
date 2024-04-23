@@ -1,19 +1,49 @@
+import behavioral.chain_of_responsibility.GameEvent;
+import behavioral.chain_of_responsibility.GameHandler;
+import behavioral.chain_of_responsibility.Monster;
+import behavioral.chain_of_responsibility.PlayerChain;
+import behavioral.command.AttackCommand;
+import behavioral.command.CommandInvoker;
+import behavioral.command.MoveCommand;
+import behavioral.iterator.GameObjectCollection;
+import behavioral.mediator.GameMediator;
+import behavioral.mediator.NPC;
+import behavioral.mediator.PlayerMediator;
+import behavioral.memento.GameMemento;
+import behavioral.memento.GameState;
+import behavioral.memento.GameStateCareTaker;
+import behavioral.observe.GameEventPublisher;
+import behavioral.observe.MonsterSystem;
+import behavioral.observe.QuestSystem;
+import behavioral.state.GameObject;
+import behavioral.state.SickState;
+import behavioral.state.UnderTreatmentState;
+import behavioral.strategy.AggressiveBehavior;
+import behavioral.strategy.PlayerStrategy;
+import behavioral.template_method.AttackAlgorithm;
+import behavioral.template_method.EventHandlingAlgorithm;
+import behavioral.template_method.MovementAlgorithm;
+import behavioral.visitor.DialogueVisitor;
+import behavioral.visitor.PlayerVisitor;
+import behavioral.visitor.QuestVisitor;
+import creational.abstractFactory.AbstractFactory;
+import creational.abstractFactory.CharacterNature;
 import creational.abstractFactory.GoodFactory;
 import creational.abstractFactory.nature.Good;
-import creational.abstractFactory.nature.Bad;
-import creational.factory.player.CharacterType;
-import creational.prototype.GameCharacter;
 import creational.builder.CharacterBuilder;
 import creational.factory.CharacterFactory;
 import creational.factory.EnemyFactory;
 import creational.factory.PlayerFactory;
+import creational.factory.player.CharacterType;
 import creational.prototype.CharacterCache;
+import creational.prototype.GameCharacter;
 import creational.singleton.GameManager;
-import creational.abstractFactory.AbstractFactory;
-import creational.abstractFactory.CharacterNature;
 import structural_design.adapter.GamePlayerDataAdapter;
 import structural_design.adapter.SavePlayerData;
-import structural_design.bridge.*;
+import structural_design.bridge.ConsolePlatform;
+import structural_design.bridge.ConsolePlayer;
+import structural_design.bridge.PCPlatform;
+import structural_design.bridge.PCPlayer;
 import structural_design.composite.GameProcess;
 import structural_design.composite.Level;
 import structural_design.composite.Stage;
@@ -146,5 +176,116 @@ public class Main {
         VirtualGame virtualGame = new VirtualGame();
         virtualGame.useGameAsset("1", "Sword");
         virtualGame.useGameAsset("2", "Shield");
+
+        // Template Method
+        System.out.println("----------Template Method----------");
+        AttackAlgorithm attackAlgorithm = new AttackAlgorithm();
+        attackAlgorithm.execute();
+
+        EventHandlingAlgorithm eventHandlingAlgorithm = new EventHandlingAlgorithm();
+        eventHandlingAlgorithm.execute();
+
+        MovementAlgorithm movementAlgorithm = new MovementAlgorithm();
+        movementAlgorithm.execute();
+
+        // Mediator
+        System.out.println("--------------Mediator--------------");
+        GameMediator gameMediator = new GameMediator();
+        PlayerMediator playerMediator = new PlayerMediator(100);
+        NPC enemy = new NPC(50);
+        gameMediator.playerAttackedEnemy();
+        gameMediator.enemyAttackedPlayer();
+
+        // Observer
+        System.out.println("--------------Observer--------------");
+        GameEventPublisher eventPublisher = new GameEventPublisher();
+        MonsterSystem monsterSystem = new MonsterSystem();
+        QuestSystem questSystem = new QuestSystem("Player1");
+        eventPublisher.subscribe(monsterSystem);
+        eventPublisher.subscribe(questSystem);
+        eventPublisher.notifyListeners("Monster Killed");
+        eventPublisher.notifyListeners("Quest Completed");
+
+        // Chain of Responsibility
+        System.out.println("------Chain of Responsibility------");
+        GameHandler monster = new Monster();
+        GameHandler player = new PlayerChain();
+        ((Monster) monster).setNextHandler(player);
+        GameEvent attackEvent = new GameEvent("attack");
+        GameEvent defendEvent = new GameEvent("defend");
+        monster.handleRequest(attackEvent);
+        monster.handleRequest(defendEvent);
+
+        // Command
+        System.out.println("--------------Command---------------");
+        CommandInvoker commandInvoker = new CommandInvoker();
+        AttackCommand attackCommand = new AttackCommand("Player1", "Enemy1");
+        MoveCommand moveCommand = new MoveCommand("Player1", 10, 20);
+        commandInvoker.setCommand(attackCommand);
+        commandInvoker.executeCommand();
+        commandInvoker.setCommand(moveCommand);
+        commandInvoker.executeCommand();
+
+        // State
+        System.out.println("---------------State----------------");
+        GameObject gameObject = new GameObject();
+        gameObject.performFeed();
+        gameObject.performTreatment();
+        gameObject.setHealthState(new SickState());
+        gameObject.performFeed();
+        gameObject.performTreatment();
+        gameObject.setHealthState(new UnderTreatmentState());
+        gameObject.performFeed();
+        gameObject.performTreatment();
+
+        // Iterator
+        System.out.println("--------------Iterator--------------");
+        GameObjectCollection gameObjects = new GameObjectCollection();
+        gameObjects.addGameObject(new GameObject("Player"));
+        gameObjects.addGameObject(new GameObject("Enemy1"));
+        gameObjects.addGameObject(new GameObject("Enemy2"));
+        gameObjects.addGameObject(new GameObject("Item1"));
+        gameObjects.addGameObject(new GameObject("Item2"));
+        for (GameObject gameObject : gameObjects) {
+            System.out.println("- " + gameObject.getName());
+        }
+
+        // Strategy
+        System.out.println("--------------Strategy--------------");
+        PlayerStrategy playerStrategy = new PlayerStrategy("Player1");
+        playerStrategy.setCharacterBehavior(new AggressiveBehavior());
+        playerStrategy.performAction();
+
+        // Memento
+        System.out.println("---------------Memento--------------");
+        GameState game = new GameMemento("Level 1");
+        System.out.println("Current game state: " + game.getStateName());
+
+        // Збереження поточного стану гри
+        GameStateCareTaker careTaker = new GameStateCareTaker();
+        careTaker.saveGameState(game);
+
+        // Зміна стану гри
+        game = new GameMemento("Level 2");
+        System.out.println("Updated game state: " + game.getStateName());
+
+        // Відновлення збереженого стану гри
+        game = careTaker.restoreGameState();
+        System.out.println("Restored game state: " + game.getStateName());
+
+        // Visitor
+        System.out.println("---------------Visitor--------------");
+        DialogueVisitor dialogueVisitor = new DialogueVisitor();
+        QuestVisitor questVisitor = new QuestVisitor();
+        PlayerVisitor playerVisitor = new PlayerVisitor();
+        Enemy enemyVisitor = new Enemy();
+        Item itemVisitor = new Item();
+        dialogueVisitor.visit(playerVisitor);
+        dialogueVisitor.visit(enemyVisitor);
+        dialogueVisitor.visit(itemVisitor);
+        questVisitor.visit(playerVisitor);
+        questVisitor.visit(enemyVisitor);
+        questVisitor.visit(itemVisitor);
+    }
     }
 }

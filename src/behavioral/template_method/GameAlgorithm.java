@@ -11,7 +11,6 @@ public abstract class GameAlgorithm {
         }
     }
 
-    // Методи, що визначають загальну структуру алгоритму
     protected void initialize() {
         System.out.println("Initializing game algorithm...");
     }
