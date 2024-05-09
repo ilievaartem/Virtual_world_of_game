@@ -23,9 +23,7 @@ import behavioral.strategy.PlayerStrategy;
 import behavioral.template_method.AttackAlgorithm;
 import behavioral.template_method.EventHandlingAlgorithm;
 import behavioral.template_method.MovementAlgorithm;
-import behavioral.visitor.DialogueVisitor;
-import behavioral.visitor.PlayerVisitor;
-import behavioral.visitor.QuestVisitor;
+import behavioral.visitor.*;
 import creational.abstractFactory.AbstractFactory;
 import creational.abstractFactory.CharacterNature;
 import creational.abstractFactory.GoodFactory;
@@ -38,22 +36,23 @@ import creational.factory.player.CharacterType;
 import creational.prototype.CharacterCache;
 import creational.prototype.GameCharacter;
 import creational.singleton.GameManager;
-import structural_design.adapter.GamePlayerDataAdapter;
-import structural_design.adapter.SavePlayerData;
-import structural_design.bridge.ConsolePlatform;
-import structural_design.bridge.ConsolePlayer;
-import structural_design.bridge.PCPlatform;
-import structural_design.bridge.PCPlayer;
-import structural_design.composite.GameProcess;
-import structural_design.composite.Level;
-import structural_design.composite.Stage;
-import structural_design.decorator.ArmorDecorator;
-import structural_design.decorator.BasicCharacter;
-import structural_design.decorator.GameProfile;
-import structural_design.decorator.WeaponDecorator;
-import structural_design.facade.GameFacade;
-import structural_design.flyweight.VirtualGame;
-import structural_design.proxy.Proxy;
+import structural.adapter.GamePlayerDataAdapter;
+import structural.adapter.PlayerScoreStatusAdapter;
+import structural.adapter.SavePlayerData;
+import structural.bridge.ConsolePlatform;
+import structural.bridge.ConsolePlayer;
+import structural.bridge.PCPlatform;
+import structural.bridge.PCPlayer;
+import structural.composite.GameProcess;
+import structural.composite.Level;
+import structural.composite.Stage;
+import structural.decorator.ArmorDecorator;
+import structural.decorator.BasicCharacter;
+import structural.decorator.GameProfile;
+import structural.decorator.WeaponDecorator;
+import structural.facade.GameFacade;
+import structural.flyweight.VirtualGame;
+import structural.proxy.Proxy;
 
 public class Main {
     public static <Player, Flyweight, Game> void main(String[] args) throws IllegalAccessException {
@@ -110,14 +109,13 @@ public class Main {
 
         // Adapter
         System.out.println("--------------Adapter--------------");
-        GamePlayerDataAdapter playerDataAdapter = new GamePlayerDataAdapter("John", "john@example.com", 25, 1000);
+        PlayerScoreStatusAdapter playerDataAdapter = new PlayerScoreStatusAdapter("John", "john@example.com", 25, "1000");
+        GamePlayerDataAdapter gamePlayerDataAdapter = new GamePlayerDataAdapter(playerDataAdapter.getPlayerName(), playerDataAdapter.getPlayerEmail(), playerDataAdapter.getPlayerAge(), playerDataAdapter.getPlayerScore());
+        System.out.println("Player Name: " + gamePlayerDataAdapter.getPlayerName());
+        System.out.println("Player Email: " + gamePlayerDataAdapter.getPlayerEmail());
+        System.out.println("Player Age: " + gamePlayerDataAdapter.getPlayerAge());
+        System.out.println("Player Score: " + gamePlayerDataAdapter.getScoreStatus());
 
-        SavePlayerData savePlayerData = new SavePlayerData(playerDataAdapter.getPlayerName(), playerDataAdapter.getPlayerEmail(), playerDataAdapter.getPlayerAge(), playerDataAdapter.getPlayerScore());
-
-        System.out.println("Player Name: " + savePlayerData.getPlayerName());
-        System.out.println("Player Email: " + savePlayerData.getPlayerEmail());
-        System.out.println("Player Age: " + savePlayerData.getPlayerAge());
-        System.out.println("Player Score: " + savePlayerData.getPlayerScore());
 
         // Bridge
         System.out.println("--------------Bridge--------------");

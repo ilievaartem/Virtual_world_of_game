@@ -2,7 +2,6 @@ package creational.prototype;
 
 import creational.abstractFactory.CharacterNature;
 import creational.factory.player.CharacterType;
-import structural_design.decorator.BasicCharacter;
 
 public class GameCharacter implements Cloneable {
     private String name;
