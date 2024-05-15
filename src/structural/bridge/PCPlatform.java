@@ -1,13 +1,8 @@
 package structural.bridge;
 
-public class PCPlatform extends Platform {
-    public PCPlatform(Player player) {
-        super(player);
-    }
-
+public class PCPlatform implements Platform {
     @Override
     public void play() {
-        System.out.print("платформа ПК: ");
-        player.play();
+        System.out.println("Playing game on PC...");
     }
 }

@@ -1,6 +1,6 @@
 package behavioral.memento;
 
-class GameStateCareTaker {
+public class GameStateCareTaker {
     private GameState gameState;
 
     // Збереження стану гри

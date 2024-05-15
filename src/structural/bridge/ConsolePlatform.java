@@ -1,13 +1,8 @@
 package structural.bridge;
 
-public class ConsolePlatform extends Platform {
-    public ConsolePlatform(Player player) {
-        super(player);
-    }
-
+public class ConsolePlatform implements Platform {
     @Override
     public void play() {
-        System.out.print("Консольна платформа: ");
-        player.play();
+        System.out.println("Playing game on console...");
     }
 }
