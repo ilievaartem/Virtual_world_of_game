@@ -21,7 +21,6 @@ public abstract class GameAlgorithm {
         return true; // Загальна реалізація, може бути перевизначена у підкласах
     }
 
-    // Hook-методи, які можуть бути перевизначені у підкласах
     protected void congratulatePlayer() {
         System.out.println("Congratulations! You completed the game algorithm.");
     }

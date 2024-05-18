@@ -9,9 +9,12 @@ public class PlayerChain implements GameHandler {
             System.out.println("Player attacks!");
         } else if (nextHandler != null) {
             nextHandler.handleRequest(event);
+        } else {
+            System.out.println("Player cannot handle this event: " + event.getType());
         }
     }
 
+    @Override
     public void setNextHandler(GameHandler nextHandler) {
         this.nextHandler = nextHandler;
     }

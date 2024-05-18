@@ -1,5 +1,13 @@
 package behavioral.memento;
 
-public interface GameState {
-    String getStateName();
+public class GameState {
+    private IGameState gameState;
+
+    public void saveGameState(IGameState gameState) {
+        this.gameState = gameState;
+    }
+
+    public IGameState restoreGameState() {
+        return gameState;
+    }
 }

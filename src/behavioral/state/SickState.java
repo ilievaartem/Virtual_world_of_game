@@ -3,11 +3,11 @@ package behavioral.state;
 public class SickState implements HealthState {
     @Override
     public void feed() {
-        System.out.println("Feeding a sick character.");
+        System.out.println("Feeding a sick animal character.");
     }
 
     @Override
     public void treat() {
-        System.out.println("Applying treatment to a sick character.");
+        System.out.println("Applying treatment to a sick animal character.");
     }
 }

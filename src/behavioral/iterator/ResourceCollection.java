@@ -11,12 +11,10 @@ public class ResourceCollection implements Iterable<Resource> {
         resources = new ArrayList<>();
     }
 
-    // Метод для додавання ресурсу до колекції
     public void addResource(Resource resource) {
         resources.add(resource);
     }
 
-    // Перевизначення методу iterator() для підтримки ітерації по колекції
     @Override
     public Iterator<Resource> iterator() {
         return resources.iterator();

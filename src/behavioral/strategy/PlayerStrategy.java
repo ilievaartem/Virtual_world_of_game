@@ -17,7 +17,7 @@ public class PlayerStrategy {
         if (characterBehavior != null) {
             characterBehavior.performBehavior();
         } else {
-            System.out.println("No behavior set.");
+            System.out.println("not have a behavior.");
         }
     }
 }

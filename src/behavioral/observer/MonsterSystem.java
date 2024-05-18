@@ -1,4 +1,4 @@
-package behavioral.observe;
+package behavioral.observer;
 
 public class MonsterSystem implements GameEventListener {
     @Override

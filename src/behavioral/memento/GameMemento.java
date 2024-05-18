@@ -1,6 +1,6 @@
 package behavioral.memento;
 
-public class GameMemento implements GameState {
+public class GameMemento implements IGameState {
     private final String stateName;
 
     public GameMemento(String stateName) {

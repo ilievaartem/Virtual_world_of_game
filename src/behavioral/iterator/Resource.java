@@ -11,9 +11,7 @@ public class Resource {
         return name;
     }
 
-    // Метод для виконання дій з ресурсом
     public void performAction() {
         System.out.println("Виконується дія з ресурсом: " + name);
-        // Реалізація конкретної дії з ресурсом
     }
 }

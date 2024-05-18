@@ -9,7 +9,6 @@ public class AttackAlgorithm extends GameAlgorithm {
 
     @Override
     protected boolean checkCompletion() {
-        // Реалізація перевірки завершення конкретного алгоритму атаки
         return false;
     }
 }

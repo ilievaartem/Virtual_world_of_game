@@ -9,9 +9,12 @@ public class Monster implements GameHandler {
             System.out.println("Monster defends!");
         } else if (nextHandler != null) {
             nextHandler.handleRequest(event);
+        } else {
+            System.out.println("Monster cannot handle this event: " + event.getType());
         }
     }
 
+    @Override
     public void setNextHandler(GameHandler nextHandler) {
         this.nextHandler = nextHandler;
     }
